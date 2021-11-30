@@ -8,7 +8,7 @@ from flask import (
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
-
+import datetime
 
 from database.models import (
     db_drop_and_create_all,
@@ -17,6 +17,9 @@ from database.models import (
     Movie,
     Actor
 )
+
+# import socket
+# socket.getaddrinfo('127.0.0.1', 8080)
 
 from auth.auth import AuthError, requires_auth
 
@@ -59,7 +62,7 @@ def create_app(test_config=None):
     def home():
         return jsonify({
             'success': True,
-            'message': 'hello world'
+            'message': 'Hello | Welcome to Heroku Capstone Agency App'
         })
     
     '''
@@ -74,14 +77,21 @@ def create_app(test_config=None):
     # require the 'get:actors' permission
     @requires_auth(permission="get:actors")
     def get_actors(payload):
-        data = Actor.query.all()
-        actors = list(map(Actor.get_actor, data))
-        if actors is None or len(actors) == 0:
-            abort(404)
-        return jsonify({
-            'success': True,
-            'actors': actors
-        })
+        try:
+            actors = Actor.query.all()
+            # actors = list(map(Actor.get_actor, data))
+            # if actors is None or len(actors) == 0:
+            #     abort(404)
+            return jsonify({
+                'success': True,
+                'actors': [actor.get_actor() for actor in actors],
+                'message': 'Grant Access'
+        
+            }), 200
+        except Exception as e:
+            print(str(e))
+        
+        
 
     '''
     Implement endpoint
@@ -94,14 +104,23 @@ def create_app(test_config=None):
     @app.route('/movies')
     @requires_auth('get:movies')
     def get_movies(payload):
-        data = Movie.query.all()
-        movies = list(map(Movie.get_movie, data))
-        if movies is None or len(movies) == 0:
-            abort(404)
+        movies = Movie.query.all()
         return jsonify({
             'success': True,
-            'movies': movies
-        })
+            'movies': [movie.get_movie() for movie in movies],
+            'message': 'Grant Access'
+        }), 200
+        # try:
+        #     data = Movie.query.all()
+        #     movies = list(map(Movie.get_movie, data))
+        #     if movies is None or len(movies) == 0:
+        #         abort(404)
+        #     return jsonify({
+        #         'success': True,
+        #         'movies': movies
+        #     })
+        # except Exception as e:
+        #     print(str(e))
 
     '''
     Implement endpoint
@@ -116,11 +135,12 @@ def create_app(test_config=None):
     @app.route('/actors', methods=['POST'])
     @requires_auth('post:actors')
     def post_actor(payload):
-        body = request.get_json()
-        if body is None:
+        body = request.get_json(force=True)
+        actor_data = body
+        if actor_data is None:
             abort(404)
-        name = body.get('name')
-        age = body.get('age')
+        name = actor_data.get('name')
+        age = actor_data.get('age')
         gender = body.get('gender')
         # verify if there is no duplicate in the id to be inserted/already exist
         chkduplicate_id = Actor.query.filter(Actor.name == name).one_or_none()
@@ -150,14 +170,17 @@ def create_app(test_config=None):
     @requires_auth('post:movies')
     def post_movie(payload):
         body = request.get_json()
+        # movie_body = body
+
         if 'title' not in body:
-            abort(404)
+             abort(404)
         title = body.get('title')
+        # realse_date = datetime.datetime(2020, 5, 17)
         release_date = body.get('release_date')
         # verify if there is no duplicate in the id to be inserted/already exist
         chkduplicate_id = Movie.query.filter(Movie.title == title).one_or_none()
         if chkduplicate_id is not None:
-            abort(400)
+             abort(400)
         try:
             new_movie = Movie(title=title, release_date=release_date)
             new_movie.insert()

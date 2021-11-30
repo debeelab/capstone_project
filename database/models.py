@@ -46,9 +46,8 @@ db_drop_and_create_all()
 
 def db_drop_and_create_all():
     db.drop_all()
-    # db.create_all()
+    db.create_all()
 
-   
 
 '''
 Movie
@@ -66,10 +65,10 @@ class Movie(db.Model):
     release_date = Column(DateTime, nullable=False, default=datetime.datetime.utcnow) 
     actors = db.relationship("Actor", backref="movies")             # parent-child relationship btw the Movie and Actor
 
+
     def __init__(self, title, release_date):
         self.title = title
         self.release_date = release_date
-        # self.actors = actors
 
     '''
     insert()
@@ -125,7 +124,7 @@ class Movie(db.Model):
 
     def __repr__(self):
         return json.dumps(self.get_movie())
-        # return "<Movies: {}, {}, {}>".get_movie(self.id, self.title, self.release_date, self.actors)
+        # return "<Movies: {}, {}, {}>".get_movie(self.id, self.title, self.release_date)
 
 
 '''
@@ -179,6 +178,3 @@ class Actor(db.Model):
 
     def __repr__(self):
         return json.dumps(self.get_actor())
-        # return "<Actors: {}, {}, {}, {}>".get_actor(
-        #     self.id, self.name, self.age, self.gender, self.movie_id
-        # )
