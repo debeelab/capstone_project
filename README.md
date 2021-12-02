@@ -1,4 +1,3 @@
-
 # Casting Agency - Capstone Project
 The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
 
@@ -48,10 +47,15 @@ This will install all of the required packages we selected within the requiremen
 ##### Key Dependencies
 - [Flask](https://flask.palletsprojects.com/en/2.0.x/) is a lightweight backend microservices framework. Flask is required to handle requests and responses.
 
-- [SQLAlchemy](https://www.sqlalchemy.org/) and [Flask-SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/) are libraries to handle the lightweight sqlite database. Since we want you to focus on auth, we handle the heavy lift for you in ./src/database/models.py. We recommend skimming this code first so you know how to interface with the Drink model.
+- [SQLAlchemy](https://www.sqlalchemy.org/) and [Flask-SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/) are libraries to handle the lightweight sqlite database. You'll primarily work in `app.py` and can reference models.py. 
 
 - [jose](https://python-jose.readthedocs.io/en/latest/) JavaScript Object Signing and Encryption for JWTs. Useful for encoding, decoding, and verifying JWTS.
 
+## Database Setup
+To test endpoints, with Postgres running, restore a database using the castingagency.sql file provided. From the file directory in terminal run:
+```
+psql castingagency < castingagency.sql
+```
 
 ## Running the server
 From within the `file directory` first ensure you are working using your created virtual environment.
