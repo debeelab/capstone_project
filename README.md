@@ -85,8 +85,8 @@ To run the server, execute:
  flask run --reload
  ```
 
-. The `--reload` flag will detect file changes and restart the server automatically.
-. Or you can directly run it with `python app.py` and everythin will be done automatically.
+- The `--reload` flag will detect file changes and restart the server automatically.
+- Or you can directly run it with `python app.py` and everythin will be done automatically.
 
 
 ### Tasks
