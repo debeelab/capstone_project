@@ -17,7 +17,7 @@ setup_db(app)
 '''
 
 
-# def setup_db(app):
+def setup_db(app):
 #     # Connect to the database
 #     database_filename = "database.db"
 #     # Get the folder path where the script runs.
@@ -30,9 +30,9 @@ setup_db(app)
 #     SQLALCHEMY_TRACK_MODIFICATIONS = False
 #     # Enable debug mode.
     
-#     db.app = app
-#     db.init_app(app)
-#     db.create_all()
+    db.app = app
+    db.init_app(app)
+    # db.create_all()
 
 
 '''
@@ -63,7 +63,7 @@ class Movie(db.Model):
     title = Column(String(80), nullable=False)
     # Release date
     release_date = Column(DateTime, nullable=False, default=datetime.datetime.utcnow) 
-    actors = db.relationship("Actor", backref="movies")             # parent-child relationship btw the Movie and Actor
+    actor_id = db.relationship("Actor", backref="movies")             # parent-child relationship btw the Movie and Actor
 
 
     def __init__(self, title, release_date):

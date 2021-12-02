@@ -7,6 +7,7 @@ from database.models import db, db_drop_and_create_all, setup_db, Movie, Actor
 from auth.auth import AuthError, requires_auth
 from sqlalchemy import Column, String, Integer, DateTime
 import logging
+
 # define the global vars
 database_name = "capstone_test.db"
 project_dir = os.path.dirname(os.path.abspath(__file__))
@@ -62,9 +63,9 @@ class CastingTestCase(unittest.TestCase):
         setup_db(self.app, self.database_path)
 
         self.new_actor1 = {
-            "name": "Test Acotor 1",
-            "age": 24,
-            "gender": "female"
+            "name": "Edward",
+            "age": 30,
+            "gender": "male"
         }
         self.new_actor2 = {
             "name": "Test Acotor 2",
@@ -96,16 +97,6 @@ class CastingTestCase(unittest.TestCase):
         """ Executed after each test """
         pass
 
-    # Define your tests. All should begin with "test_" and include a doc
-    #  string about the purpose of the test. In defining the tests,
-    # you will need to:
-    # 1. Get the response by having the client make a request
-    # 2. Use self.assertEqual to check the status code and all other
-    # relevant operations.
-    # def test_given_behavior(self):
-    #     """Test ____________ """
-    #     res = self.client().get('/')
-    #     self.assertEqual(res.status_code, 200)
 
     # ===============================================
     # ====           Actor Tests                =====

@@ -13,7 +13,7 @@ import datetime
 from database.models import (
     db_drop_and_create_all,
     db,
-    # setup_db,
+    setup_db,
     Movie,
     Actor
 )
@@ -29,9 +29,9 @@ def create_app(test_config=None):
     # Create and configure the app
     app = Flask(__name__)
     app.config.from_object('config')  # Import things from config
-    db.app = app
-    db.init_app(app)
-    # setup_db(app)
+    # db.app = app
+    # db.init_app(app)
+    setup_db(app)
     migrate.init_app(app, db)
     CORS(app)
     # CORS(app, resources={'/': {'origin': '*'}})

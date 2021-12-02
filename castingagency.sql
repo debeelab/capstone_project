@@ -28,7 +28,8 @@ CREATE TABLE public.actors (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     age integer,
-    gender character varying(10)
+    gender character varying(10),
+    movies_id integer NOT NULL
 );
 
 
@@ -121,11 +122,11 @@ ALTER TABLE ONLY public.movies ALTER COLUMN id SET DEFAULT nextval('public.movie
 -- Data for Name: actor; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.actors (id, name, age, gender) FROM stdin;
-1	Edward	30	male
-2	David	30	male
-3	Bill	30	other
-4	Sarah	30	female
+COPY public.actors (id, name, age, gender, movies_id) FROM stdin;
+1   Edward  30  male    1
+2	David	30	male    1
+3	Bill	30	other   2
+4	Sarah	30	female  3
 \.
 
 
@@ -135,9 +136,9 @@ COPY public.actors (id, name, age, gender) FROM stdin;
 
 COPY public.movies (id, title, release_date) FROM stdin;
 1	Blood Diamond	2020-05-04 00:00:00
-2	Dream Girls	2010-07-01 00:00:00
-3	The Train	2002-09-01 00:00:00
-4	Yes Man	2012-08-01 00:00:00
+2	Dream Girls	2010-07-01 00:00:00         
+3	The Train	2002-09-01 00:00:00         
+4	Yes Man	2012-08-01 00:00:00             
 \.
 
 
@@ -191,8 +192,8 @@ ALTER TABLE ONLY public.movies
 -- Name: movies movies_actor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.movies
-    ADD CONSTRAINT actors_id_fkey FOREIGN KEY (actor_id) REFERENCES public.actors(id);
+-- ALTER TABLE ONLY public.movies
+--     ADD CONSTRAINT actors_id FOREIGN KEY (actors_id) REFERENCES public.actors(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
 
 --
@@ -200,7 +201,7 @@ ALTER TABLE ONLY public.movies
 --
 
 ALTER TABLE ONLY public.actors
-    ADD CONSTRAINT movies_id_fkey FOREIGN KEY (movie_id) REFERENCES public.movies(id);
+    ADD CONSTRAINT movies_id FOREIGN KEY (movies_id) REFERENCES public.movies(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
 
 --
