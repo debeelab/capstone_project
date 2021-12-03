@@ -62,7 +62,7 @@ def create_app(test_config=None):
     def home():
         return jsonify({
             'success': True,
-            'message': 'Hello | Welcome to Heroku Capstone Agency App'
+            'message': 'Hello | Welcome to Heroku Capstone Casting Agency App'
         })
     
     '''
