@@ -1,38 +1,14 @@
 # Casting Agency - Capstone Project
 The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
 
-## **Casting Agency Specifications**
-
 ### Models
 - Movies with attributes: title and release date
 - Actors with attributes: name, age and gender
-
-### Endpoints
-- GET /actors and /movies
-- DELETE /actors/ and /movies/
-- POST /actors and /movies and
-- PATCH /actors/ and /movies/
-
-### Roles
-- Casting Assistant:
-    * Can view actors and movies
-- Casting Director:
-    * All permissions a Casting Assistant has and…
-    * Add or delete an actor from the database
-    * Modify actors or movies
- - Executive Producer:
-    * All permissions a Casting Director has and…
-    * Add or delete a movie from the database
-    
-### Tests
-- One test for success behavior of each endpoint
-- One test for error behavior of each endpoint
-- At least two tests of RBAC for each role
     
 ## Getting Started
 ### Installing Dependencies
 #### Python 3.7+
-Follow instructions to install the latest version of python for your platform in the [python docs]https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python) 
+Follow instructions to install the latest version of python for your platform in the [python docs](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python) 
 
 #### Virtual Enviornment
 We recommend working within a virtual environment whenever using Python for projects. This keeps your dependencies for each project separate and organaized. Instructions for setting up a virual enviornment for your platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/) 
@@ -64,7 +40,7 @@ From within the `file directory` first ensure you are working using your created
 Each time you open a new terminal session, run:
 
 ```bash
-export FLASK_APP=app.py;
+export FLASK_APP=app.py
 ```
    
 On windows you should run this command instead:
@@ -74,10 +50,10 @@ On windows you should run this command instead:
     
 Also set the following environmental variable for Auth0
 ```bash 
-export AUTH0_DOMAIN='your_auth0_domain';
-export API_AUDIENCE='auth0_audience';
-export DATABASE_URI_DEV='developmenent_db_uri';
-export DATABASE_URI_TEST='your_test_db';
+export AUTH0_DOMAIN='your_auth0_domain'
+export API_AUDIENCE='auth0_audience'
+export DATABASE_URI_DEV='developmenent_db_uri'
+export DATABASE_URI_TEST='your_test_db'
 ```
 To run the server, execute:
 
@@ -89,7 +65,9 @@ To run the server, execute:
 - Or you can directly run it with `python app.py` and everythin will be done automatically.
 
 
-### Tasks
+## Tasks
+### Deployment
+This app is hosted and deployed on heroku inorder to access it from cloud, as well as share with others. The link to the app is at [Capstone Casting Agency](http://capstone-agency-app.herokuapp.com/)
 
 ### Setup Auth0
 1. Create a new Auth0 Account
@@ -113,6 +91,7 @@ To run the server, execute:
     - delete:movies
     - delete:actors
     
+  ### Roles
 6. Create new roles for:
     * Casting Assistant
         - can get:movies get:actors
@@ -137,17 +116,27 @@ To run the server, execute:
 >```
 >Like for example in my case:
 >```http
->https://jamb-fsnd.us.auth0.com/authorize?audience=castingagency&response_type=token&client_id=p1U7BG6MaJxHOSEJzrdNwFsVrC9CZjnR&redirect_uri=https://casting-agency-app.herokuapp.com/ 
+>https://jamb-fsnd.us.auth0.com/authorize?audience=castingagency&response_type=token&client_id=p1U7BG6MaJxHOSEJzrdNwFsVrC9CZjnR&redirect_uri=https://capstone-agency-app.herokuapp.com/ 
 >```
 
-
-## Testing
+    
+## Tests
+- One test for success behavior of each endpoint
+- One test for error behavior of each endpoint
+- At least two tests of RBAC for each role
+### Testing
 To run the tests, run
 ```
 python3 capstone_test_app.py
-```
+``` 
 
 ## Endpoints documentation
+### Endpoints
+- GET /actors and /movies
+- DELETE /actors/ and /movies/
+- POST /actors and /movies and
+- PATCH /actors/ and /movies/
+
 ### GET '/movies'
 - Fetches a dictionary of movies
 - Required URL Arguments: None
@@ -156,22 +145,12 @@ python3 capstone_test_app.py
 - Success Response:
 ```json
 {
-            "movies": [
+   "movies": [
                {
                    "id": 1,
                   "release_date": "2020-05-04 00:00:00",
                   "title": "Blood Diamond"
-               },
-        {
-            "id": 2,
-            "release_date": "2010-07-01 00:00:00",
-            "title": "Dream Girls"
-        },
-        {
-            "id": 3,
-            "release_date": "2002-09-01 00:00:00",
-            "title": "The Train"
-        }
+               }
     ],
     "status_code": 200,
     "status_message": "OK",
@@ -192,18 +171,6 @@ python3 capstone_test_app.py
             "gender": "male",
             "id": 1,
             "name": "Will Smith"
-        },
-        {
-            "age": 45,
-            "gender": "male",
-            "id": 2,
-            "name": "Denzel Washinton"
-        },
-        {
-            "age": 35,
-            "gender": "female",
-            "id": 3,
-            "name": "Serena Williams"
         }
     ],
     "status_code": 200,
