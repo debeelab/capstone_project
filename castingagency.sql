@@ -123,10 +123,10 @@ ALTER TABLE ONLY public.movies ALTER COLUMN id SET DEFAULT nextval('public.movie
 --
 
 COPY public.actors (id, name, age, gender, movies_id) FROM stdin;
-1   Edward  30  male    1
-2	David	30	male    1
-3	Bill	30	other   2
-4	Sarah	30	female  3
+1   Will Smith  40  male    1
+2	Denzel Washinton	45	male    1
+3	Bill	35	other   2
+4	Juno	30	female  3
 \.
 
 
