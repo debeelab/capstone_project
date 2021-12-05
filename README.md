@@ -115,7 +115,7 @@ This app is hosted and deployed on heroku inorder to access it from cloud, as we
 >```
 >Like for example in my case:
 >```http
->https://jamb-fsnd.us.auth0.com/authorize?audience=castingagency&response_type=token&client_id=p1U7BG6MaJxHOSEJzrdNwFsVrC9CZjnR&redirect_uri=https://capstone-agency-app.herokuapp.com/ 
+>https://jamb-fsnd.us.auth0.com/authorize?audience=castingagency&response_type=token&client_id=9R8UUg1B8qDZf2PkSU99Pql0riT4Vu0R&redirect_uri=https://capstone-agency-app.herokuapp.com/ 
 >```
 
     
