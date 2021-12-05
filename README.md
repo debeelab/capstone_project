@@ -52,7 +52,6 @@ Also set the following environmental variable for Auth0
 ```bash 
 export AUTH0_DOMAIN='your_auth0_domain'
 export API_AUDIENCE='auth0_audience'
-export DATABASE_URI_DEV='developmenent_db_uri'
 export DATABASE_URI_TEST='your_test_db'
 ```
 To run the server, execute:
@@ -62,7 +61,7 @@ To run the server, execute:
  ```
 
 - The `--reload` flag will detect file changes and restart the server automatically.
-- Or you can directly run it with `python app.py` and everythin will be done automatically.
+- Or you can run the `python app.py` directly this will run your app.py automatically.
 
 
 ## Tasks
