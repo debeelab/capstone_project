@@ -79,9 +79,6 @@ def create_app(test_config=None):
     def get_actors(payload):
         try:
             actors = Actor.query.all()
-            # actors = list(map(Actor.get_actor, data))
-            # if actors is None or len(actors) == 0:
-            #     abort(404)
             return jsonify({
                 'success': True,
                 'actors': [actor.get_actor() for actor in actors],
@@ -110,17 +107,6 @@ def create_app(test_config=None):
             'movies': [movie.get_movie() for movie in movies],
             'message': 'Grant Access'
         }), 200
-        # try:
-        #     data = Movie.query.all()
-        #     movies = list(map(Movie.get_movie, data))
-        #     if movies is None or len(movies) == 0:
-        #         abort(404)
-        #     return jsonify({
-        #         'success': True,
-        #         'movies': movies
-        #     })
-        # except Exception as e:
-        #     print(str(e))
 
     '''
     Implement endpoint
