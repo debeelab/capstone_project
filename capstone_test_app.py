@@ -63,20 +63,20 @@ class CastingTestCase(unittest.TestCase):
         setup_db(self.app, self.database_path)
 
         self.new_actor1 = {
-            "name": "Edward",
-            "age": 30,
+            "name": "Denzel Washington",
+            "age": 40,
             "gender": "male"
         }
         self.new_actor2 = {
-            "name": "Test Acotor 2",
-            "age": 24,
-            "gender": "female"
+            "name": "Forest Willtaker",
+            "age": 30,
+            "gender": "male"
         }
         self.new_movie1 = {
-            "title": "The Tes Movie 1"
+            "title": "Blood Diamond"
         }
         self.new_movie2 = {
-            "title": "The Tes Movie 2"
+            "title": "Dream Girls"
         }
         # binds the app to the current context
         with self.app.app_context():
