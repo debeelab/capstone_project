@@ -1,6 +1,8 @@
 # Casting Agency - Capstone Project
 The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
 
+## Heroku URL
+The link to the app is at [Capstone Casting Agency](http://capstone-agency-app.herokuapp.com/)
 ### Models
 - Movies with attributes: title and release date
 - Actors with attributes: name, age and gender
@@ -286,3 +288,14 @@ python3 capstone_test_app.py
     "success": true
 }
 ```
+
+## Error Handling
+The API will return four(04) error types when requests fail and one internal server error:
+
+- 400: Bad Request
+- 404: Resource Not Found
+- 405: Method Not allowed
+- 422: Not Processable
+- 401: AuthError Unauthorized error
+- 403: AuthError Permission not found
+- 500: Internal Server error
