@@ -62,6 +62,8 @@ class CastingTestCase(unittest.TestCase):
         self.database_path = database_path
         setup_db(self.app, self.database_path)
 
+
+        # sample new_actors and movies for use in tests
         self.new_actor1 = {
             "name": "Denzel Washington",
             "age": 40,

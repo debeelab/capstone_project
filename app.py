@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
 import datetime
-
+from urllib.request import Request, urlopen
 from database.models import (
     db_drop_and_create_all,
     db,
@@ -18,12 +18,13 @@ from database.models import (
     Actor
 )
 
-# import socket
-# socket.getaddrinfo('127.0.0.1', 8080)
+import socket
+socket.getaddrinfo('127.0.0.1', 8080)
 
 from auth.auth import AuthError, requires_auth
 
 migrate = Migrate()
+
 
 def create_app(test_config=None):
     # Create and configure the app
@@ -33,8 +34,8 @@ def create_app(test_config=None):
     # db.init_app(app)
     setup_db(app)
     migrate.init_app(app, db)
-    CORS(app)
-    # CORS(app, resources={'/': {'origin': '*'}})
+    # CORS(app)
+    CORS(app, resources={'/': {'origin': '*'}})
 
     '''
     @TODO uncomment the following line to initialize the datbase
@@ -56,7 +57,7 @@ def create_app(test_config=None):
         response.headers.add('Access-Control-Allow-Methods',
                              'GET, PATCH, POST, DELETE, OPTIONS')
         return response
-    
+
     # ROUTES
     @app.route('/')
     def home():
@@ -64,7 +65,7 @@ def create_app(test_config=None):
             'success': True,
             'message': 'Hello | Welcome to Heroku Capstone Casting Agency App'
         })
-    
+
     '''
     Implement endpoint
         GET /actors
@@ -73,7 +74,7 @@ def create_app(test_config=None):
             where actors is the list of actors
             or appropriate status code indicating reason for failure
     '''
-    @app.route('/actors')
+    @app.route('/actors', methods=['GET'])
     # require the 'get:actors' permission
     @requires_auth(permission="get:actors")
     def get_actors(payload):
@@ -98,15 +99,19 @@ def create_app(test_config=None):
             where movies is the list of movies
             or appropriate status code indicating reason for failure
     '''
-    @app.route('/movies')
+    @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
     def get_movies(payload):
-        movies = Movie.query.all()
-        return jsonify({
-            'success': True,
-            'movies': [movie.get_movie() for movie in movies],
-            'message': 'Grant Access'
-        }), 200
+        try:
+            movies = Movie.query.all()
+            return jsonify({
+                'success': True,
+                'movies': [movie.get_movie() for movie in movies],
+                'message': 'Grant Access'
+            }), 200
+        except Exception as e:
+            # sys.exc_info()[0]
+            print(str(e))
 
     '''
     Implement endpoint
@@ -141,6 +146,7 @@ def create_app(test_config=None):
             })
         except Exception as error:
             abort(422)
+            db.session.rollback()
 
     '''
     Implement endpoint
@@ -176,6 +182,7 @@ def create_app(test_config=None):
             })
         except Exception as error:
             abort(422)
+            db.session.rollback()
 
     '''
     Implement endpoint
@@ -216,7 +223,9 @@ def create_app(test_config=None):
                 'actors': [upd_actor.get_actor()]
             })
         except Exception as error:
+            db.session.rollback()
             abort(422)
+            
 
     '''
     PATCH /movies/<movie id>
@@ -254,6 +263,7 @@ def create_app(test_config=None):
             })
         except Exception as error:
             abort(422)
+            db.session.rollback()
 
     '''
     DELETE /actors/<id>
@@ -375,6 +385,14 @@ def create_app(test_config=None):
             "code": error.error['code'],
             "message": error.error['description']
         }), error.status_code
+
+    @app.errorhandler(500)
+    def server_error(error):
+        return jsonify({
+            "success": False,
+            "error": 500,
+            "message": "internal server error"
+        }), 500
 
     return app
 app = create_app()

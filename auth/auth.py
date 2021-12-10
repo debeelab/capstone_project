@@ -1,5 +1,6 @@
 import json
 from flask import request, _request_ctx_stack, abort
+from urllib.request import urlopen
 from functools import wraps
 from jose import jwt
 from urllib.error import URLError
@@ -15,8 +16,8 @@ ALGORITHMS = ['RS256']
 # ALGORITHMS = os.getenv('ALGORITHMS')
 
 # Configure the logging
-# logging.basicConfig(filename='error.log', level=logging.INFO,
-#                     format='%(asctime)s %(levelname)s: %(message)s')
+logging.basicConfig(filename='error.log', level=logging.INFO,
+                    format='%(asctime)s %(levelname)s: %(message)s')
 
 
 # AuthError Exception
@@ -47,6 +48,7 @@ def get_token_auth_header():
     """
     auth_header = request.headers.get('Authorization', None)
     if not auth_header:
+        logging.info('Authorization header is missing')
         raise AuthError({
             'code': 'authorization_header_missing',
             'description': 'Authorization header is expected.'
@@ -54,18 +56,21 @@ def get_token_auth_header():
 
     header_parts = auth_header.split()
     if header_parts[0].lower() != 'bearer':
+        logging.info('Invalid header, Authorization is expected')
         raise AuthError({
             'code': 'invalid_header',
             'description': 'Authorization header must start with "Bearer".'
         }, 401)
 
     elif len(header_parts) == 1:
+        logging.info('invalid header, Token not found')
         raise AuthError({
             'code': 'invalid_header',
             'description': 'Token not found.'
         }, 401)
 
     elif len(header_parts) != 2:
+        logging.info('Authorization header must be bearer token.')
         raise AuthError({
             'code': 'invalid_header',
             'description': 'Authorization header must be bearer token.'
@@ -98,6 +103,7 @@ def verify_decode_jwt(token):
 
     # Auth0 token should have a key id
     if 'kid' not in unverified_header:
+        logging.info('invalid_header, Authorization malformed')
         raise AuthError({
             'code': 'invalid_header',
             'description': 'Authorization malformed'
@@ -130,14 +136,16 @@ def verify_decode_jwt(token):
             return payload
 
         except jwt.ExpiredSignatureError:
-
+            logging.info('Token expired')
             raise AuthError({
                 'code': 'token_expired',
                 'description': 'Token expired.'
             }, 401)
 
         except jwt.JWTClaimsError:
-
+            logging.info(
+                """ invalid_claims, Incorrect claims.
+                    Please, check the audience and issuer.""")
             raise AuthError({
                 'code': 'invalid_claims',
                 'description': 'Incorrect claims. Please, '
@@ -145,7 +153,9 @@ def verify_decode_jwt(token):
             }, 401)
 
         except Exception:
-
+            logging.error(
+                """ invalid_header, Unable to
+                parse authentication token.""", exc_info=True)
             raise AuthError({
                 'code': 'invalid_header',
                 'description': 'Unable to parse authentication token.'
@@ -181,9 +191,14 @@ def verify_decode_jwt(token):
 '''
 def check_permissions(permission, payload):
     if 'permissions' not in payload:
-        abort(400)
+        logging.info('invalid_claims, Permissions not included in JWT.')
+        raise AuthError({
+            'code': 'invalid claims',
+            'description': 'Permission Not include in JWT.',
+        }, 400)
 
     if permission not in payload['permissions']:
+        logging.info('unauthorized, permission not found')
         raise AuthError({
             'code': 'unauthorized',
             'description': 'Permission Not found',
