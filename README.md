@@ -1,7 +1,7 @@
 # Casting Agency - Capstone Project
 The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
 
-##Heroku URL
+## Heroku URL
 The link to the app is at [Capstone Casting Agency](http://capstone-agency-app.herokuapp.com/)
 ### Models
 - Movies with attributes: title and release date
