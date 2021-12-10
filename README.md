@@ -52,7 +52,6 @@ Also set the following environmental variable for Auth0
 ```bash 
 export AUTH0_DOMAIN='your_auth0_domain'
 export API_AUDIENCE='auth0_audience'
-export DATABASE_URI_DEV='developmenent_db_uri'
 export DATABASE_URI_TEST='your_test_db'
 ```
 To run the server, execute:
@@ -62,7 +61,7 @@ To run the server, execute:
  ```
 
 - The `--reload` flag will detect file changes and restart the server automatically.
-- Or you can directly run it with `python app.py` and everythin will be done automatically.
+- Or you can run the `python app.py` directly this will run your app.py automatically.
 
 
 ## Tasks
@@ -114,9 +113,9 @@ This app is hosted and deployed on heroku inorder to access it from cloud, as we
 >```http
 >https://YOUR_DOMAIN/authorize?audience=API_IDENTIFIER&response_type=token&client_id=YOUR_CLIENT_ID&redirect_uri={{YOUR_CALLBACK_URI}}
 >```
->Like for example in my case:
+>For example:
 >```http
->https://jamb-fsnd.us.auth0.com/authorize?audience=castingagency&response_type=token&client_id=p1U7BG6MaJxHOSEJzrdNwFsVrC9CZjnR&redirect_uri=https://capstone-agency-app.herokuapp.com/ 
+>https://jamb-fsnd.us.auth0.com/authorize?audience=castingagency&response_type=token&client_id=9R8UUg1B8qDZf2PkSU99Pql0riT4Vu0R&redirect_uri=https://capstone-agency-app.herokuapp.com/ 
 >```
 
     
