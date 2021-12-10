@@ -288,3 +288,14 @@ python3 capstone_test_app.py
     "success": true
 }
 ```
+
+## Error Handling
+The API will return four(04) error types when requests fail and one internal server error:
+
+- 400: Bad Request
+- 404: Resource Not Found
+- 405: Method Not allowed
+- 422: Not Processable
+- 401: AuthError Unauthorized error
+- 403: AuthError Permission not found
+- 500: Internal Server error
